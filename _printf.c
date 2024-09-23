@@ -29,31 +29,13 @@ int	_print_str(char *str)
 	}
 	return (count);
 }
-int	_print_format(char specifier, va_list args)
-{
-	int	count;
 
-	count = 0;
-	if (specifier == 'c')
-	{
-		count += _print_char(va_arg(args, int));
-	}
-	else if (specifier == 's')
-	{
-		count += _print_str(va_arg(args, char *));
-	}
-	else if (specifier == '%')
-	{
-		count += _print_char('%');
-	}
-	else
-	{
-		count += _print_char('%');
-		count += _print_char(specifier);
-	}
-	return (count);
-}
-
+/**
+  * _printf - Produces output according to a format.
+  * @format: The fromat string.
+  *
+  * Return: The number of characters printed.
+  */
 int	_printf(const char *format, ...)
 {
 	va_list args;
@@ -66,7 +48,23 @@ int	_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			count += _print_format(*format, args);
+			if (*format == 'c')
+			{
+				count += _print_char(va_arg(args, int));
+			}
+			else if (*format == 's')
+			{
+				count += _print_str(va_arg(args, char *));
+			}
+			else if (*format == '%')
+			{
+				count += _print_char('%');
+			}
+			else
+			{
+				count += _print_char('%');
+				count += _print_char(*format);
+			}
 		}
 		else
 		{
@@ -78,6 +76,4 @@ int	_printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
-
-
 
