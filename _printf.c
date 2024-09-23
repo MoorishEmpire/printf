@@ -1,36 +1,8 @@
 #include "main.h"
+#include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-/**
-  * _print_char - Prints a character to stdout
-  * @c: The character to print.
-  *
-  * Return: Number of characters printed.
-  */
-int	_print_char(char c)
-{
-	return (write(1, &c, 1));
-}
-
-/**
-  * _print_str - Prints a string to stdout.
-  * @str: The string to print.
-  *
-  * Return: Number of characters printed.
-  */
-int	_print_str(char *str)
-{
-	int count;
-
-	if (!str)
-		str = "(null)";
-	count = 0;
-	while (*str)
-	{
-		_print_char(*str++);
-		count++;
-	}
-	return (count);
-}
 
 /**
   * _printf - Produces output according to a format.
@@ -53,7 +25,11 @@ int	_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			if (*format == 'c')
+			if (*format == '\0')
+			{
+				return (-1);
+			}
+			else if (*format == 'c')
 			{
 				count += _print_char(va_arg(args, int));
 			}
