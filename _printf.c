@@ -31,6 +31,8 @@ int	_printf(const char *format, ...)
 				count += _print_char(va_arg(args, int));
 			else if (*format == 's')
 				count += _print_str(va_arg(args, char *));
+			else if (*format == 'i' || *format == 'd')
+				count += _print_int(va_arg(args, int));
 			else if (*format == '%')
 				count += _print_char('%');
 			else
